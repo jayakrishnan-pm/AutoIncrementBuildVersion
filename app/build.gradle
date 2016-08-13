@@ -48,12 +48,12 @@ android {
     }
 
 
-    /* auto increment build number for debug build*/
+    /* auto increment build number for Debug build*/
     assembleDebug << {
         autoIncrementBuildNumber()
     }
 
-    /* auto increment build number for debug build*/
+    /* auto increment build number for Release build*/
     assembleRelease << {
         autoIncrementBuildNumber()
     }
