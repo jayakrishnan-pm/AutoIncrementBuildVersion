@@ -5,32 +5,57 @@ android {
     buildToolsVersion "22.0.1"
 
     def versionPropsFile = file('version.properties')
+    def versionBuild
 
+    /*Setting default value for versionBuild which is the last incremented value stored in the file */
     if (versionPropsFile.canRead()) {
         def Properties versionProps = new Properties()
         versionProps.load(new FileInputStream(versionPropsFile))
-        def versionBuild = versionProps['VERSION_BUILD'].toInteger() + 1
-        versionProps['VERSION_BUILD'] = versionBuild.toString()
-        versionProps.store(versionPropsFile.newWriter(), null)
-
-        defaultConfig {
-            minSdkVersion 16
-            targetSdkVersion 21
-            versionCode 1
-            versionName "1.0.0." + versionBuild
-
-        }
+        versionBuild = versionProps['VERSION_BUILD'].toInteger()
     } else {
         throw new GradleException("Could not read version.properties!")
     }
 
 
+    /*Wrapping inside a method avoids auto incrementing on every gradle task run. Now it runs only when we build apk*/
+    ext.autoIncrementBuildNumber = {
+
+        if (versionPropsFile.canRead()) {
+            def Properties versionProps = new Properties()
+            versionProps.load(new FileInputStream(versionPropsFile))
+            versionBuild = versionProps['VERSION_BUILD'].toInteger() + 1
+            versionProps['VERSION_BUILD'] = versionBuild.toString()
+            versionProps.store(versionPropsFile.newWriter(), null)
+        } else {
+            throw new GradleException("Could not read version.properties!")
+        }
+    }
+
+
+    defaultConfig {
+        minSdkVersion 16
+        targetSdkVersion 21
+        versionCode 1
+        versionName "1.0.0." + versionBuild
+
+    }
 
     buildTypes {
         release {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
+    }
+
+
+    /* auto increment build number for debug build*/
+    assembleDebug << {
+        autoIncrementBuildNumber()
+    }
+
+    /* auto increment build number for debug build*/
+    assembleRelease << {
+        autoIncrementBuildNumber()
     }
 }
 
