@@ -1,5 +1,6 @@
 # AutoIncrementBuildVersion
 Sample applicaiton shows how to auto increment the buil name value through gradle script
 
-![version_name](https://cloud.githubusercontent.com/assets/6814816/16513017/993366b8-3f7e-11e6-9515-ef2558a5bf52.png)
+![screen_build_number](https://cloud.githubusercontent.com/assets/6814816/17641862/94ef951c-614e-11e6-9392-e28f89abb1c2.png)
+
 
