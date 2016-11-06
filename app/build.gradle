@@ -37,7 +37,6 @@ android {
         targetSdkVersion 21
         versionCode 1
         versionName "1.0.0." + versionBuild
-
     }
 
     buildTypes {
@@ -47,15 +46,14 @@ android {
         }
     }
 
-
-    /* auto increment build number for Debug build*/
-    assembleDebug << {
-        autoIncrementBuildNumber()
-    }
-
-    /* auto increment build number for Release build*/
-    assembleRelease << {
-        autoIncrementBuildNumber()
+    // Hook to check if the release/debug task is among the tasks to be executed.
+    //Let's make use of it
+    gradle.taskGraph.whenReady {taskGraph ->
+        if (taskGraph.hasTask(assembleDebug)) {  /* when run debug task */
+            autoIncrementBuildNumber()
+        } else if (taskGraph.hasTask(assembleRelease)) { /* when run release task */
+            autoIncrementBuildNumber()
+        }
     }
 }
 
