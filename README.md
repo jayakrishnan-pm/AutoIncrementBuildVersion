@@ -7,7 +7,7 @@ Sample applicaiton shows how to auto increment the build number value using grad
 
 MIT License
 
-Copyright (c) 2017 Jayakrishnan PM
+Copyright (c) 2017 Devdeeds.com
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
